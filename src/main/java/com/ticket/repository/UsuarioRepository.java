@@ -31,4 +31,13 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
      * @return true si existe, false en caso contrario
      */
     boolean existsByEmail(String email);
+
+    /**
+     * Busca un usuario por email y password para autenticación.
+     * 
+     * @param email    el email del usuario
+     * @param password la contraseña del usuario
+     * @return Optional con el usuario si las credenciales son válidas
+     */
+    Optional<Usuario> findByEmailAndPassword(String email, String password);
 }

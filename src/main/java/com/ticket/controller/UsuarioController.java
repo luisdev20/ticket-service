@@ -1,5 +1,6 @@
 package com.ticket.controller;
 
+import com.ticket.dto.LoginRequest;
 import com.ticket.model.Usuario;
 import com.ticket.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -72,6 +73,34 @@ public class UsuarioController {
         } catch (IllegalArgumentException e) {
             logger.error("Error al crear usuario: {}", e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /**
+     * Endpoint de login para autenticar usuarios.
+     * 
+     * @param request objeto con email y password
+     * @return el usuario autenticado o 401 si las credenciales son inválidas
+     */
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
+        logger.info("Intento de login para: {}", request.getEmail());
+
+        try {
+            var usuario = usuarioService.login(request.getEmail(), request.getPassword());
+
+            if (usuario.isPresent()) {
+                logger.info("Login exitoso para: {}", request.getEmail());
+                return ResponseEntity.ok(usuario.get());
+            } else {
+                logger.warn("Login fallido para: {} - Credenciales inválidas", request.getEmail());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body("Credenciales inválidas");
+            }
+        } catch (Exception e) {
+            logger.error("Error en login: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al procesar login");
         }
     }
 }

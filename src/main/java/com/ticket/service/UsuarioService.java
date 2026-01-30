@@ -65,4 +65,15 @@ public class UsuarioService {
 
         return usuarioRepository.save(usuario);
     }
+
+    /**
+     * Autentica un usuario con email y password.
+     * 
+     * @param email    el email del usuario
+     * @param password la contraseña del usuario
+     * @return Optional con el usuario si las credenciales son válidas
+     */
+    public Optional<Usuario> login(String email, String password) {
+        return usuarioRepository.findByEmailAndPassword(email, password);
+    }
 }
