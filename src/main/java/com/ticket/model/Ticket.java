@@ -48,6 +48,10 @@ public class Ticket {
     @Column(nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = true)
+    private Usuario usuario;
+
     /**
      * Callback de JPA que se ejecuta antes de persistir la entidad.
      * Inicializa la fecha de creación y el estado por defecto.
