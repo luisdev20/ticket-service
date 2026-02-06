@@ -13,13 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Controlador REST para gestionar usuarios.
- * Proporciona endpoints para crear y listar usuarios.
- * 
- * @author Sistema de Tickets
- * @version 1.0
- */
 @RestController
 @RequestMapping("/api/usuarios")
 @CrossOrigin(origins = "*")
@@ -30,11 +23,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    /**
-     * Obtiene todos los usuarios.
-     * 
-     * @return lista de usuarios
-     */
+    
     @GetMapping
     public ResponseEntity<List<Usuario>> obtenerTodos() {
         logger.info("Obteniendo todos los usuarios");
@@ -42,12 +31,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-    /**
-     * Obtiene un usuario por su ID.
-     * 
-     * @param id el ID del usuario
-     * @return el usuario encontrado o 404 si no existe
-     */
+    
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> obtenerPorId(@PathVariable Long id) {
         logger.info("Obteniendo usuario con ID: {}", id);
@@ -56,12 +40,7 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /**
-     * Crea un nuevo usuario.
-     * 
-     * @param usuario el usuario a crear
-     * @return el usuario creado con status 201
-     */
+    
     @PostMapping
     public ResponseEntity<?> crear(@Valid @RequestBody Usuario usuario) {
         logger.info("Creando nuevo usuario: {}", usuario.getEmail());
@@ -76,12 +55,7 @@ public class UsuarioController {
         }
     }
 
-    /**
-     * Endpoint de login para autenticar usuarios.
-     * 
-     * @param request objeto con email y password
-     * @return el usuario autenticado o 401 si las credenciales son inválidas
-     */
+    
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         logger.info("Intento de login para: {}", request.getEmail());

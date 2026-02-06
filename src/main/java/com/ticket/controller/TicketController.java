@@ -11,13 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Controlador REST para gestionar los Tickets del sistema.
- * Expone endpoints para operaciones CRUD sobre tickets.
- * 
- * @author Sistema de Tickets
- * @version 1.0
- */
 @RestController
 @RequestMapping("/api/tickets")
 @RequiredArgsConstructor
@@ -26,11 +19,7 @@ public class TicketController {
 
     private final TicketService ticketService;
 
-    /**
-     * Obtiene todos los tickets del sistema.
-     * 
-     * @return Lista de todos los tickets con status 200 OK
-     */
+    
     @GetMapping
     public ResponseEntity<List<Ticket>> getAllTickets() {
         log.info("GET /api/tickets - Obteniendo todos los tickets");
@@ -38,12 +27,7 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
-    /**
-     * Obtiene un ticket específico por su ID.
-     * 
-     * @param id ID del ticket a buscar
-     * @return Ticket encontrado con status 200 OK, o 404 Not Found si no existe
-     */
+    
     @GetMapping("/{id}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable Long id) {
         log.info("GET /api/tickets/{} - Buscando ticket", id);
@@ -55,13 +39,7 @@ public class TicketController {
                 });
     }
 
-    /**
-     * Crea un nuevo ticket en el sistema.
-     * Las validaciones se ejecutan automáticamente gracias a @Valid.
-     * 
-     * @param ticket Datos del ticket a crear (validados)
-     * @return Ticket creado con status 201 Created
-     */
+    
     @PostMapping
     public ResponseEntity<Ticket> createTicket(@Valid @RequestBody Ticket ticket) {
         log.info("POST /api/tickets - Creando nuevo ticket: {}", ticket.getTitulo());
@@ -69,13 +47,7 @@ public class TicketController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTicket);
     }
 
-    /**
-     * Actualiza un ticket existente.
-     * 
-     * @param id     ID del ticket a actualizar
-     * @param ticket Nuevos datos del ticket (validados)
-     * @return Ticket actualizado con status 200 OK, o 404 Not Found si no existe
-     */
+    
     @PutMapping("/{id}")
     public ResponseEntity<Ticket> updateTicket(
             @PathVariable Long id,
@@ -89,12 +61,7 @@ public class TicketController {
                 });
     }
 
-    /**
-     * Elimina un ticket del sistema.
-     * 
-     * @param id ID del ticket a eliminar
-     * @return Status 204 No Content si se eliminó, o 404 Not Found si no existe
-     */
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTicket(@PathVariable Long id) {
         log.info("DELETE /api/tickets/{} - Eliminando ticket", id);

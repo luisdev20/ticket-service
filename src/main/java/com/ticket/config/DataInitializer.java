@@ -1,7 +1,9 @@
 package com.ticket.config;
 
+import com.ticket.model.Categoria;
 import com.ticket.model.Rol;
 import com.ticket.model.Usuario;
+import com.ticket.repository.CategoriaRepository;
 import com.ticket.repository.UsuarioRepository;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -9,13 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Componente que inicializa datos de prueba en la base de datos.
- * Se ejecuta automáticamente al iniciar la aplicación.
- * 
- * @author Sistema de Tickets
- * @version 1.0
- */
 @Component
 public class DataInitializer {
 
@@ -24,15 +19,33 @@ public class DataInitializer {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    /**
-     * Método que se ejecuta después de la construcción del bean.
-     * Crea un usuario de prueba si no existe.
-     */
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
     @PostConstruct
     public void init() {
         logger.info("Inicializando datos de prueba...");
 
-        // Verificar si ya existe el usuario admin
+        initCategorias();
+        initUsuario();
+    }
+
+    private void initCategorias() {
+        String[] categorias = { "Hardware", "Software", "Redes" };
+
+        for (String nombreCategoria : categorias) {
+            if (!categoriaRepository.existsByNombre(nombreCategoria)) {
+                Categoria categoria = new Categoria();
+                categoria.setNombre(nombreCategoria);
+                categoriaRepository.save(categoria);
+                logger.info("✅ Categoría creada: {}", nombreCategoria);
+            } else {
+                logger.info("ℹ️ Categoría ya existe: {}", nombreCategoria);
+            }
+        }
+    }
+
+    private void initUsuario() {
         if (!usuarioRepository.existsByEmail("admin@test.com")) {
             Usuario admin = new Usuario();
             admin.setNombre("Administrador");

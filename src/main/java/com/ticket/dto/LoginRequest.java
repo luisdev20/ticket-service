@@ -6,12 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * DTO para recibir credenciales de login.
- * 
- * @author Sistema de Tickets
- * @version 1.0
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

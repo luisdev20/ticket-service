@@ -12,24 +12,11 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Manejador global de excepciones para toda la aplicación.
- * Proporciona respuestas consistentes y detalladas para errores.
- * 
- * @author Sistema de Tickets
- * @version 1.0
- */
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
-    /**
-     * Maneja errores de validación de Bean Validation.
-     * Se activa cuando @Valid falla en el controlador.
-     * 
-     * @param ex Excepción de validación
-     * @return Mapa con los errores de validación por campo
-     */
+    
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
@@ -52,12 +39,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
-    /**
-     * Maneja excepciones genéricas no capturadas.
-     * 
-     * @param ex Excepción genérica
-     * @return Respuesta de error genérica
-     */
+    
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
         Map<String, Object> response = new HashMap<>();

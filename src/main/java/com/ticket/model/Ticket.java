@@ -9,13 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-/**
- * Entidad JPA que representa un Ticket en el sistema.
- * Utiliza Lombok para reducir boilerplate code.
- * 
- * @author Sistema de Tickets
- * @version 1.0
- */
 @Entity
 @Table(name = "tickets")
 @Data
@@ -52,10 +45,11 @@ public class Ticket {
     @JoinColumn(name = "usuario_id", nullable = true)
     private Usuario usuario;
 
-    /**
-     * Callback de JPA que se ejecuta antes de persistir la entidad.
-     * Inicializa la fecha de creación y el estado por defecto.
-     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "categoria_id", nullable = true)
+    private Categoria categoria;
+
+    
     @PrePersist
     protected void onCreate() {
         this.fechaCreacion = LocalDateTime.now();

@@ -8,12 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Entidad JPA que representa un Usuario en el sistema.
- * 
- * @author Sistema de Tickets
- * @version 1.0
- */
 @Entity
 @Table(name = "usuarios")
 @Data
