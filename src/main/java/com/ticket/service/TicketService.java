@@ -18,19 +18,16 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
 
-    
     public List<Ticket> getAllTickets() {
         log.info("Obteniendo todos los tickets");
         return ticketRepository.findAll();
     }
 
-    
     public Optional<Ticket> getTicketById(Long id) {
         log.info("Buscando ticket con ID: {}", id);
         return ticketRepository.findById(id);
     }
 
-    
     @Transactional
     public Ticket createTicket(Ticket ticket) {
         log.info("Creando nuevo ticket: {}", ticket.getTitulo());
@@ -39,7 +36,6 @@ public class TicketService {
         return savedTicket;
     }
 
-    
     @Transactional
     public Optional<Ticket> updateTicket(Long id, Ticket ticketDetails) {
         log.info("Actualizando ticket con ID: {}", id);
@@ -49,13 +45,15 @@ public class TicketService {
                     ticket.setDescripcion(ticketDetails.getDescripcion());
                     ticket.setPrioridad(ticketDetails.getPrioridad());
                     ticket.setEstado(ticketDetails.getEstado());
+                    if (ticketDetails.getUsuario() != null) {
+                        ticket.setUsuario(ticketDetails.getUsuario());
+                    }
                     Ticket updated = ticketRepository.save(ticket);
                     log.info("Ticket actualizado exitosamente: {}", id);
                     return updated;
                 });
     }
 
-    
     @Transactional
     public boolean deleteTicket(Long id) {
         log.info("Eliminando ticket con ID: {}", id);

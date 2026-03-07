@@ -46,17 +46,28 @@ public class DataInitializer {
     }
 
     private void initUsuario() {
+        // Inicializar Administrador
         if (!usuarioRepository.existsByEmail("admin@test.com")) {
             Usuario admin = new Usuario();
-            admin.setNombre("Administrador");
+            admin.setNombre("Administrador Central");
             admin.setEmail("admin@test.com");
             admin.setPassword("1234");
-            admin.setRol(Rol.TECNICO);
+            admin.setRol(Rol.ADMIN);
 
             usuarioRepository.save(admin);
-            logger.info("✅ Usuario de prueba creado: admin@test.com / 1234");
-        } else {
-            logger.info("ℹ️ Usuario de prueba ya existe: admin@test.com");
+            logger.info("✅ Administrador creado: admin@test.com / 1234");
+        }
+
+        // Inicializar Técnico
+        if (!usuarioRepository.existsByEmail("tecnico@test.com")) {
+            Usuario tecnico = new Usuario();
+            tecnico.setNombre("Técnico de Soporte 1");
+            tecnico.setEmail("tecnico@test.com");
+            tecnico.setPassword("1234");
+            tecnico.setRol(Rol.TECNICO);
+
+            usuarioRepository.save(tecnico);
+            logger.info("✅ Técnico de prueba creado: tecnico@test.com / 1234");
         }
     }
 }
